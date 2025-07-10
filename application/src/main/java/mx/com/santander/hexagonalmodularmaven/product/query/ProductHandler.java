@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import mx.com.santander.hexagonalmodularmaven.product.mapper.ProductMapperDto;
 import mx.com.santander.hexagonalmodularmaven.product.model.dto.DtoProduct;
+import mx.com.santander.hexagonalmodularmaven.product.service.ProductService;
 
 @Component
 @RequiredArgsConstructor
