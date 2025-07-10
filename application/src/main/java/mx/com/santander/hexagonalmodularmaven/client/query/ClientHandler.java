@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import mx.com.santander.hexagonalmodularmaven.client.mapper.ClientMapperDto;
-import mx.com.santander.hexagonalmodularmaven.product.service.ClientService;
-
 import mx.com.santander.hexagonalmodularmaven.client.model.dto.DtoClient;
+import mx.com.santander.hexagonalmodularmaven.client.service.ClientService;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
