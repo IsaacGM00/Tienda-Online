@@ -1,4 +1,4 @@
-package mx.com.santander.hexagonalmodularmaven.product.service;
+package mx.com.santander.hexagonalmodularmaven.client.service;
 
 import mx.com.santander.hexagonalmodularmaven.client.model.entity.Client;
 import mx.com.santander.hexagonalmodularmaven.client.port.repository.ClientRepository;
