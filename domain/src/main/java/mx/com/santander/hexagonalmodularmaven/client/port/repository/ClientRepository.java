@@ -1,11 +1,13 @@
 package mx.com.santander.hexagonalmodularmaven.client.port.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Optional;
 
 import mx.com.santander.hexagonalmodularmaven.client.model.entity.Client;
 
-@Repository
-public interface ClientRepository extends JpaRepository<Client, Long>{
-    
+public interface ClientRepository {
+    Optional<Client> findById(Long id);
+    Client save(Client client);
+    void deleteById(Long id);
+    List<Client> findAll();
 }
