@@ -16,7 +16,7 @@ public class CreateClientHandler {
     private final CreateClientService createClientService;
     private final ClientMapperDto clientMapperDto;
 
-    public DtoClient excecute(CreateClientCommand createClientCommand){
+    public DtoClient execute(CreateClientCommand createClientCommand){
         return clientMapperDto.toDto(createClientService.execute(createClientCommand));
 
     }
