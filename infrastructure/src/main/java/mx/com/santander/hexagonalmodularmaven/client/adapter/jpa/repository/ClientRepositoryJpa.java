@@ -48,4 +48,23 @@ public class ClientRepositoryJpa implements ClientRepository {
             .map(mapperClient::toDomain)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public Client update(Long id, Client client) {
+        Optional<ClientEntity> existingEntityOpt = jpaClientRepository.findById(id);
+        if (existingEntityOpt.isPresent()) {
+            ClientEntity existingEntity = existingEntityOpt.get();
+
+            existingEntity.setNombre(client.getNombre());
+            existingEntity.setApellido(client.getApellido());
+            existingEntity.setEmail(client.getEmail());
+            existingEntity.setTelefono(client.getTelefono());
+            existingEntity.setDireccion(client.getDireccion());
+
+            ClientEntity updatedEntity = jpaClientRepository.save(existingEntity);
+            return mapperClient.toDomain(updatedEntity);
+        } else {
+            throw new RuntimeException("Cliente con id " + id + "se encuentra sin registro");
+        }
+    }
 }
