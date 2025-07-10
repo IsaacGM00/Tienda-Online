@@ -3,9 +3,12 @@ package mx.com.santander.hexagonalmodularmaven.client.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import mx.com.santander.hexagonalmodularmaven.client.model.dto.DtoClient;
+import mx.com.santander.hexagonalmodularmaven.client.model.entity.Client;
+
 @Mapper(componentModel = "spring")
 
-public class ClientMapperDto {
+public interface ClientMapperDto {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "nombre", source = "nombre")
     @Mapping(target = "apellido", source = "apellido")

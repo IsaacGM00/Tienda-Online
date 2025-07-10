@@ -15,6 +15,6 @@ public class ClientHandler {
     private final ClientService clientService;
 
     public List<DtoClient> execute(){
-        return clientService.excecute().stream().map(clientMapperDto::toDto).collect(Collectors.toList());
+        return clientService.execute().stream().map(clientMapperDto::toDto).collect(Collectors.toList());
     }
 }
