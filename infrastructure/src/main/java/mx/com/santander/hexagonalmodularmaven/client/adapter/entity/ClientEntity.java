@@ -9,7 +9,7 @@ import mx.com.santander.hexagonalmodularmaven.client.model.dto.command.CreateCli
 
 @Entity
 @Table(name = "clients")
-public class Client {
+public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -59,8 +59,8 @@ public class Client {
     }
 
     // Método para construir un Client desde un CreateClientCommand
-    public static Client fromCommand(CreateClientCommand command) {
-        Client client = new Client();
+    public static ClientEntity fromCommand(CreateClientCommand command) {
+        ClientEntity client = new ClientEntity();
         client.setNombre(command.getNombre());
         client.setApellido(command.getApellido());
         client.setEmail(command.getEmail());
