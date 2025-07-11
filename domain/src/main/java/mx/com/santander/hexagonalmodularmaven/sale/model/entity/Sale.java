@@ -1,89 +1,102 @@
 package mx.com.santander.hexagonalmodularmaven.sale.model.entity;
 
+import jakarta.persistence.*;
+import mx.com.santander.hexagonalmodularmaven.product.model.entity.Product;
+import mx.com.santander.hexagonalmodularmaven.sale.model.dto.command.CreateSaleCommand;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import mx.com.santander.hexagonalmodularmaven.client.model.entity.Client;
+import java.util.stream.Collectors;
+import java.util.function.Function;
 
 @Entity
-@Table(name="sales")
+@Table(name = "sales")
 public class Sale {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "clienteId")
-    private Client cliente;
+    private Long clienteId;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "Sale", cascade = CascadeType.ALL)
     private List<DetailSale> detalles;
 
-    private Double precioTotal;
+    private BigDecimal precioTotal;
+
     private LocalDateTime fechaCompra;
 
-    // Constructor completo
-    public Sale(Long id, Client cliente, List<DetailSale> detalles, Double precioTotal, 
-    LocalDateTime fechaCompra) {
+    public Sale() {}
+
+    public Sale(Long id, Long clienteId, List<DetailSale> detalles, BigDecimal precioTotal, LocalDateTime fechaCompra) {
         this.id = id;
-        this.cliente = cliente;
+        this.clienteId = clienteId;
         this.detalles = detalles;
         this.precioTotal = precioTotal;
         this.fechaCompra = fechaCompra;
     }
-
-    // Constructor vacío (requerido por JPA)
-    public Sale() {}
 
     // Getters y setters
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    public Client getClient() {
-        return cliente;
+
+    public Long getClienteId() {
+        return clienteId;
     }
-    public void setClient(Client cliente) {
-        this.cliente = cliente;
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
+
     public List<DetailSale> getDetalles() {
         return detalles;
     }
+
     public void setDetalles(List<DetailSale> detalles) {
         this.detalles = detalles;
     }
-    public Double getPrecioTotal() {
+
+    public BigDecimal getPrecioTotal() {
         return precioTotal;
     }
-    public void setPrecioTotal(Double precioTotal) {
+
+    public void setPrecioTotal(BigDecimal precioTotal) {
         this.precioTotal = precioTotal;
     }
+
     public LocalDateTime getFechaCompra() {
         return fechaCompra;
     }
+
     public void setFechaCompra(LocalDateTime fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 
-    // Método para construir desde un comando
-    public static Sale fromCommand(Client cliente, List<DetailSale> detalles, Double precioTotal) {
+    public static Sale fromCommand(CreateSaleCommand command, Function<Long, Product> productFinder) {
         Sale sale = new Sale();
-        sale.setClient(cliente); // Este cliente debe ser buscado previamente por el clienteId
-        sale.setDetalles(detalles); // Convertidos desde DtoProductSale
-        sale.setPrecioTotal(precioTotal);
-        sale.setFechaCompra(LocalDateTime.now()); 
+        sale.setClienteId(command.getClienteId());
+        sale.setPrecioTotal(command.getPrecioTotal());
+        sale.setFechaCompra(command.getFechaCompra());
+
+        List<DetailSale> detalles = command.getDetalles().stream()
+            .map(detailCommand -> {
+             DetailSale detail = new DetailSale();
+            detail.setProducto(productFinder.apply(detailCommand.getProductoId()));
+            detail.setCantidad(detailCommand.getCantidad());
+            detail.setPrecioUnitario(detailCommand.getPrecioUnitario());
+            detail.setVenta(sale); // Relación bidireccional
+            return detail;
+        })
+
+        .collect(Collectors.toList());
+        sale.setDetalles(detalles);
         return sale;
     }
+
 }

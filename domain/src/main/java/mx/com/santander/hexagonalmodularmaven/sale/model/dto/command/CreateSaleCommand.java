@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import mx.com.santander.hexagonalmodularmaven.sale.model.dto.DtoProductSale;
 
@@ -15,5 +17,7 @@ import mx.com.santander.hexagonalmodularmaven.sale.model.dto.DtoProductSale;
 
 public class CreateSaleCommand {
     private Long clienteId;
-    private List<DtoProductSale> productos;
+    private List<DtoProductSale> detalles;
+    private BigDecimal precioTotal;
+    private LocalDateTime fechaCompra;
 }
