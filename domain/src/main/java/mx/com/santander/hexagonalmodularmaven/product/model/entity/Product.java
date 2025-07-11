@@ -16,6 +16,19 @@ public class Product {
     private String nombre;
     private Double precio;
     private Integer stock;
+
+    // Constructor completo
+    public Product(Long id, String nombre, Double precio, Integer stock) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+    }
+
+    // Constructor vacío (requerido por JPA)
+    public Product() {}
+
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -41,6 +54,7 @@ public class Product {
         this.stock = stock;
     }
 
+    // Método para construir desde un comando
     public static Product fromCommand(CreateProductCommand command) {
         Product product = new Product();
         product.setNombre(command.getNombre());
@@ -48,5 +62,4 @@ public class Product {
         product.setStock(command.getStock());
         return product;
     }
-    
 }
