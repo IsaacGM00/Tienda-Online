@@ -8,6 +8,7 @@ import mx.com.santander.hexagonalmodularmaven.client.model.entity.Client;
 public interface ClientRepository {
     Optional<Client> findById(Long id);
     Client save(Client client);
+    Client create(Client client);
     void deleteById(Long id);
     List<Client> findAll();
     Client update(Long id, Client client);
