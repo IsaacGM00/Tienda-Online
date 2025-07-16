@@ -1,22 +1,20 @@
 package mx.com.santander.hexagonalmodularmaven.client.model.exception;
 
-public class ClientNotFound extends RuntimeException{
+public class ClientNotFound extends RuntimeException {
 
-    private String errorMsj;
+    private final String errorMsj;
 
     public ClientNotFound(String errorMsj) {
         super(errorMsj);
+        this.errorMsj = errorMsj;
     }
 
-    public ClientNotFound(){
+    public ClientNotFound() {
         super();
+        this.errorMsj = null;
     }
 
     public String getErrorMsj() {
         return errorMsj;
-    }
-
-    public void setErrorMsj(String errorMsj) {
-        this.errorMsj = errorMsj;
     }
 }
