@@ -13,4 +13,5 @@ import lombok.Setter;
 public class DtoProductSale {
     private Long productoId;
     private Integer cantidad;
+    private Double precioUnitario;
 }
