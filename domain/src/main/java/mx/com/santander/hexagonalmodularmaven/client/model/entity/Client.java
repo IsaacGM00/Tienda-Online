@@ -2,6 +2,7 @@ package mx.com.santander.hexagonalmodularmaven.client.model.entity;
 
 import lombok.NoArgsConstructor;
 import mx.com.santander.hexagonalmodularmaven.client.model.dto.command.CreateClientCommand;
+import mx.com.santander.hexagonalmodularmaven.client.model.dto.command.UpdateClientCommand;
 
 @NoArgsConstructor
 public class Client {
@@ -29,6 +30,15 @@ public class Client {
         this.email = new ClientEmail(createClientCommand.getEmail());
         this.telefono = new ClientTelefono(createClientCommand.getTelefono());
         this.direccion = new ClientDireccion(createClientCommand.getDireccion());
+        return this;
+    }
+
+    public Client requestToUpdateClient(UpdateClientCommand updateClientCommand){
+        this.nombre = new ClientNombre(updateClientCommand.getNombre());
+        this.apellido = new ClientApellido(updateClientCommand.getApellido());
+        this.email = new ClientEmail(updateClientCommand.getEmail());
+        this.telefono = new ClientTelefono(updateClientCommand.getTelefono());
+        this.direccion = new ClientDireccion(updateClientCommand.getDireccion());
         return this;
     }
 

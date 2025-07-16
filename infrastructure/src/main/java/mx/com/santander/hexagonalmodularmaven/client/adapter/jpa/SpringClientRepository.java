@@ -5,5 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import mx.com.santander.hexagonalmodularmaven.client.adapter.entity.ClientEntity;
 
 @Repository
-public interface JpaClientRepository extends JpaRepository<ClientEntity, Long> {
+public interface SpringClientRepository extends JpaRepository<ClientEntity, Long> {
+    ClientEntity getById(Long id);
+    boolean existedByEmail(String email);
+    boolean existedByNombre(String nombre);
 }
