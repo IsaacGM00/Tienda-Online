@@ -11,15 +11,28 @@ import mx.com.santander.hexagonalmodularmaven.sale.model.entity.Sale;
 
 @Component
 public class MapperSale {
-        public SaleEntity toEntity(Sale sale){
 
+    public SaleEntity toEntity(Sale sale) {
         SaleEntity saleEntity = new SaleEntity();
         saleEntity.setClienteId(sale.getClienteId());
         saleEntity.setPrecioTotal(sale.getPrecioTotal());
         saleEntity.setFechaCompra(sale.getFechaCompra());
+        saleEntity.setDetalles(toEntityList(sale.getDetalles())); // ← Usamos el nuevo método
+        return saleEntity;
+    }
 
+    public Sale toDomain(SaleEntity saleEntity) {
+        Sale sale = new Sale();
+        sale.setId(saleEntity.getId());
+        sale.setClienteId(saleEntity.getClienteId());
+        sale.setPrecioTotal(saleEntity.getPrecioTotal());
+        sale.setFechaCompra(saleEntity.getFechaCompra());
+        sale.setDetalles(toDomainList(saleEntity.getDetalles())); // ← Usamos el nuevo método
+        return sale;
+    }
 
-        List<DetailSaleEntity> detalles = sale.getDetalles().stream().map(p ->{
+    public List<DetailSaleEntity> toEntityList(List<DetailSale> detalles) {
+        return detalles.stream().map(p -> {
             DetailSaleEntity detalleSaleEntity = new DetailSaleEntity();
             detalleSaleEntity.setProductoId(p.getProductoId());
             detalleSaleEntity.setNombre(p.getNombre());
@@ -27,18 +40,10 @@ public class MapperSale {
             detalleSaleEntity.setPrecioUnitario(p.getPrecioUnitario());
             return detalleSaleEntity;
         }).toList();
-        saleEntity.setDetalles(detalles);
-        return saleEntity;
     }
 
-    public Sale toDomain(SaleEntity saleEntity){
-        Sale sale = new Sale();
-        sale.setId(saleEntity.getId());
-        sale.setClienteId(saleEntity.getClienteId());
-        sale.setPrecioTotal(saleEntity.getPrecioTotal());
-        sale.setFechaCompra(saleEntity.getFechaCompra());
-
-        List<DetailSale> detalles = saleEntity.getDetalles().stream().map(p->{
+    public List<DetailSale> toDomainList(List<DetailSaleEntity> detalles) {
+        return detalles.stream().map(p -> {
             DetailSale detailSale = new DetailSale();
             detailSale.setProductoId(p.getProductoId());
             detailSale.setNombre(p.getNombre());
@@ -46,8 +51,5 @@ public class MapperSale {
             detailSale.setPrecioUnitario(p.getPrecioUnitario());
             return detailSale;
         }).toList();
-
-        sale.setDetalles(detalles);
-        return sale;
     }
 }
