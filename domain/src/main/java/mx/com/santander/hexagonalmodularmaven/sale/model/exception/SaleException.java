@@ -1,14 +1,14 @@
-package mx.com.santander.hexagonalmodularmaven.product.model.exception;
+package mx.com.santander.hexagonalmodularmaven.sale.model.exception;
 
-public class ProductException extends RuntimeException{
+public class SaleException extends RuntimeException{
     private final String errorMsj;
 
-    public ProductException() {
+    public SaleException() {
         super();
         this.errorMsj = null;
     }
 
-    public ProductException(String errorMsj) {
+    public SaleException(String errorMsj) {
         super(errorMsj);
         this.errorMsj = errorMsj;
     }

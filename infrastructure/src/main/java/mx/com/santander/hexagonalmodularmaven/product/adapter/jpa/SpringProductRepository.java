@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import mx.com.santander.hexagonalmodularmaven.product.adapter.entity.ProductEntity;
 
 @Repository
-public interface JpaProductRepository extends JpaRepository<ProductEntity, Long>{
-    
+public interface SpringProductRepository extends JpaRepository<ProductEntity, Long>{
+    ProductEntity getById(Long id);
+    boolean existedByNombre(String nombre);
 }

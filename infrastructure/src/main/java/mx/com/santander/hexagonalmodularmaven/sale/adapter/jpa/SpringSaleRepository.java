@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import mx.com.santander.hexagonalmodularmaven.sale.adapter.entity.SaleEntity;
 
 @Repository
-public interface JpaSaleRepository extends JpaRepository<SaleEntity, Long>{
+public interface SpringSaleRepository extends JpaRepository<SaleEntity, Long>{
     
 }

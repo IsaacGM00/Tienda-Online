@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import mx.com.santander.hexagonalmodularmaven.product.adapter.mapper.MapperProduct;
 import mx.com.santander.hexagonalmodularmaven.product.model.entity.Product;
-import mx.com.santander.hexagonalmodularmaven.product.adapter.jpa.JpaProductRepository;
+import mx.com.santander.hexagonalmodularmaven.product.adapter.jpa.SpringProductRepository;
 
 @RequiredArgsConstructor
 @Component
 public class DataProductAdapter {
-    private final JpaProductRepository jpaProductRepository;
+    private final SpringProductRepository jpaProductRepository;
     private final MapperProduct mapperProduct;
 
     public Product obtainData(Long id){

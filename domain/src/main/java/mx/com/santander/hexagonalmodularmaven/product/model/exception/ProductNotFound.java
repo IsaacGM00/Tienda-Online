@@ -1,21 +1,19 @@
 package mx.com.santander.hexagonalmodularmaven.product.model.exception;
 
 public class ProductNotFound extends RuntimeException{
-    private String errorMsj;
+    private final String errorMsj;
 
     public ProductNotFound(String errorMsj) {
         super(errorMsj);
+        this.errorMsj = errorMsj;
     }
 
-    public ProductNotFound(){
+    public ProductNotFound() {
         super();
+        this.errorMsj = null;
     }
 
     public String getErrorMsj() {
         return errorMsj;
-    }
-
-    public void setErrorMsj(String errorMsj) {
-        this.errorMsj = errorMsj;
     }
 }
