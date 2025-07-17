@@ -1,4 +1,17 @@
+package mx.com.santander.hexagonalmodularmaven.sale;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.Collections;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import mx.com.santander.hexagonalmodularmaven.product.model.entity.Product;
 import mx.com.santander.hexagonalmodularmaven.product.port.dao.DaoProduct;
@@ -10,7 +23,8 @@ import mx.com.santander.hexagonalmodularmaven.sale.port.repository.SaleRepositor
 import mx.com.santander.hexagonalmodularmaven.sale.service.CreateSaleService;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateSaleServiceTest {
+class CreateSaleServiceTest {
+
     @Mock
     private SaleRepository saleRepository;
 
@@ -23,30 +37,24 @@ public class CreateSaleServiceTest {
     @InjectMocks
     private CreateSaleService createSaleService;
 
-    @BeforeEach
-    void testSale(){
-        saleRepository = mock(SaleRepository.class);
-        daoProduct = mock(DaoProduct.class);
-        productRepository = mock(ProductRepository.class);
-        createSaleService = new CreateSaleService(saleRepository, productRepository, daoProduct);
-    }
-
     @Test
-    void buyAndUpdateStock(){
+    void buyAndUpdateStock() {
         CreateSaleCommand createSaleCommand = new CreateSaleCommand();
         Sale sale = new Sale();
         DetailSale detailSale = new DetailSale();
 
-        detailSale.setId(1);
+        detailSale.setProductoId(1L);
         detailSale.setCantidad(2);
         sale.setDetalles(Collections.singletonList(detailSale));
 
-        Product product = new Product(1, "XboxOne", 16544.95, 27);
+        Product product = new Product(1L, "Xbox360", 15604.32, 40);
 
-        when(daoProduct.getById(1)).thenReturn(product);
+        when(daoProduct.getById(1L)).thenReturn(product);
+        when(saleRepository.save(any(Sale.class))).thenReturn(sale);
 
         Sale resultSale = createSaleService.execute(createSaleCommand);
+
         assertNotNull(resultSale);
-        verify(productRepository).update(any(Product.class));
+        verify(productRepository).update(product.getId(), product);
     }
 }

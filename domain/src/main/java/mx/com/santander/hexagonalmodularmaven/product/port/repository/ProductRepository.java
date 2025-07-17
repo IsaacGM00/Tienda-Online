@@ -9,6 +9,6 @@ public interface ProductRepository {
     Product save(Product product);
     void deleteById(Long id);
     List<Product> findAll();
-    
     Product update(Long id, Product product);
+    Product create(Product product);
 }

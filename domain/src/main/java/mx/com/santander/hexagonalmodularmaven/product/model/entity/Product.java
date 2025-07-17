@@ -1,65 +1,51 @@
 package mx.com.santander.hexagonalmodularmaven.product.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 import mx.com.santander.hexagonalmodularmaven.product.model.dto.command.CreateProductCommand;
+import mx.com.santander.hexagonalmodularmaven.product.model.dto.command.UpdateProductCommand;
 
-@Entity
-@Table(name = "products")
+@NoArgsConstructor
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nombre;
-    private Double precio;
-    private Integer stock;
+    
+    private ProductId id;
+    private ProductNombre nombre;
+    private ProductPrecio precio;
+    private ProductStock stock;
 
     // Constructor completo
     public Product(Long id, String nombre, Double precio, Integer stock) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.stock = stock;
+        this.id = new ProductId(id);
+        this.nombre = new ProductNombre(nombre);
+        this.precio = new ProductPrecio(precio);
+        this.stock = new ProductStock(stock);
     }
 
-    // Constructor vacío (requerido por JPA)
-    public Product() {}
+    public Product requestToCreateProduct(CreateProductCommand createProductCommand){
+        this.nombre = new ProductNombre(createProductCommand.getNombre());
+        this.precio = new ProductPrecio(createProductCommand.getPrecio());
+        this.stock = new ProductStock(createProductCommand.getStock());
+        return this;
+    }
 
-    // Getters y setters
+    public Product requestToUpdateProduct(UpdateProductCommand updateProductCommand){
+        this.nombre = new ProductNombre(updateProductCommand.getNombre());
+        this.precio = new ProductPrecio(updateProductCommand.getPrecio());
+        this.stock = new ProductStock(updateProductCommand.getStock());
+        return this;
+    }
+
+    // Getters 
     public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
+        return id.getId();
     }
     public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+        return nombre.getNombre();
     }
     public Double getPrecio() {
-        return precio;
-    }
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+        return precio.getPrecio();
     }
     public Integer getStock() {
-        return stock;
-    }
-    public void setStock(Integer stock) {
-        this.stock = stock;
+        return stock.getStock();
     }
 
-    // Método para construir desde un comando
-    public static Product fromCommand(CreateProductCommand command) {
-        Product product = new Product();
-        product.setNombre(command.getNombre());
-        product.setPrecio(command.getPrecio());
-        product.setStock(command.getStock());
-        return product;
-    }
 }
