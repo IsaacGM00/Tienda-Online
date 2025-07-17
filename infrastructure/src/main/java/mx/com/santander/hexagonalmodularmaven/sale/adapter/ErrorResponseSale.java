@@ -1,4 +1,4 @@
-package mx.com.santander.hexagonalmodularmaven.sale;
+package mx.com.santander.hexagonalmodularmaven.sale.adapter;
 
 import java.time.LocalDateTime;
 
